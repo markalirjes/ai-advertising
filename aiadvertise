@@ -1,0 +1,29 @@
+<?php
+function generateRandomWords($numWords) {
+    // تعریف چند آرایه کلمات
+    $array1 = ["سیب", "پرتقال", "موز", "گیلاس"];
+    $array2 = ["آبی", "قرمز", "سبز", "زرد"];
+    $array3 = ["خانه", "ماشین", "درخت", "دریا"];
+
+    // ترکیب همه آرایه‌ها در یک آرایه بزرگ‌تر
+    $allWords = array_merge($array1, $array2, $array3);
+
+    // چک کردن تعداد کلمات درخواستی
+    if ($numWords > count($allWords)) {
+        $numWords = count($allWords); // جلوگیری از درخواست کلمات بیشتر از تعداد موجود
+    }
+
+    // انتخاب کلمات تصادفی از آرایه بزرگ‌تر
+    $randomWords = array_rand(array_flip($allWords), $numWords);
+
+    // برگرداندن کلمات انتخاب شده
+    return $randomWords;
+}
+
+// ورودی برای تعداد کلمات
+$numWords = 5; // شما می‌توانید این مقدار را تغییر دهید
+
+// فراخوانی تابع و چاپ کلمات تصادفی
+$randomWords = generateRandomWords($numWords);
+echo implode(" ", $randomWords);
+?>
