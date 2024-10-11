@@ -1,0 +1,32 @@
+import cv2
+import dlib
+import numpy as np
+
+# بارگذاری مدل تشخیص صورت دلیب
+detector = dlib.get_frontal_face_detector()
+predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
+
+# بارگذاری تصویر
+image = cv2.imread("input.jpg")
+overlay = cv2.imread("filter.png", cv2.IMREAD_UNCHANGED)
+
+# تبدیل تصویر به مقیاس خاکستری
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+# تشخیص چهره‌ها
+faces = detector(gray)
+
+for face in faces:
+    landmarks = predictor(gray, face)
+    # نقاط مشخصه‌ی صورت رو روی تصویر اعمال کنید
+
+    # مثال: اعمال فیلتر روی نقطه چشم‌ها
+    for n in range(36, 48):
+        x = landmarks.part(n).x
+        y = landmarks.part(n).y
+        cv2.circle(image, (x, y), 2, (255, 0, 0), -1)
+
+# نمایش تصویر
+cv2.imshow("Output", image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
